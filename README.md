@@ -1,40 +1,31 @@
+
 # CodeAlpha_DataRedundancySystem
-Cloud Computing Internship, Task 1: a system that classifies incoming data as **unique**, **duplicate** or **invalid (false positive)** and appends only unique, verified entries to the database.
 
-## How it works
-1. **Validation:** name and email required, valid email format, numeric phone.
-2. **Duplicate email:** rejected with "Duplicate email: this email is already registered."
-3. **Duplicate user:** same phone and a similar name (RapidFuzz >= 90%) is rejected.
-4. Only valid, unique users are saved in the database.
+A cloud-based **Data Redundancy Removal System** built for the CodeAlpha Cloud Computing Internship (Task 1).
 
-## Run locally
-```bash
-python -m venv venv
-venv\Scripts\activate      # Mac/Linux: source venv/bin/activate
-pip install -r requirements.txt
-python app.py              # open http://127.0.0.1:5000
-```
-Open the page, register a user, then register the same email again to see the duplicate message.
+## Overview
+Duplicate and invalid data lowers the accuracy and efficiency of a database. This system checks every new registration against existing data and only stores entries that are valid and unique. Anything else is rejected with a clear message.
 
-## API
-| Method | Route | Purpose |
-|---|---|---|
-| POST | /register | JSON `{name,email,phone}` |
-| GET | /users | list stored users |
+## Features
+- Validates input: required fields, email format and numeric phone number
+- Detects **exact duplicates** by email (database UNIQUE constraint and SHA-256 record hash)
+- Detects **near duplicates** using fuzzy name matching (RapidFuzz) combined with the phone number
+- Appends only unique, verified records to the database
+- Shows clear messages, for example "Duplicate email: this email is already registered."
+- Simple web interface and REST API
+- Deployable on AWS EC2
 
-## Deploy to the cloud
-**Option A, AWS EC2:** launch Ubuntu t2/t3.micro, open ports 22 and 80, then:
-```bash
-git clone <your-repo> && cd CodeAlpha_DataRedundancySystem
-sudo apt update && sudo apt install -y python3-venv
-python3 -m venv venv && source venv/bin/activate
-pip install -r requirements.txt
-sudo venv/bin/gunicorn -b 0.0.0.0:80 app:app
-```
-**Option B, Google Cloud Run (easiest):**
-```bash
-gcloud run deploy data-redundancy --source . --allow-unauthenticated --region asia-south1
-```
-**Option C, Render / Azure App Service:** connect the GitHub repo, start command `gunicorn app:app`.
+## Tech Stack
+Python, Flask, SQLite, RapidFuzz, email-validator, Gunicorn, HTML/CSS/JavaScript, AWS EC2
 
-> SQLite resets on serverless platforms. For persistent storage, point the code at AWS RDS / Cloud SQL (PostgreSQL) using SQLAlchemy or psycopg2 and an environment variable for credentials.
+## How It Works
+1. The user submits name, email and phone.
+2. The input is validated.
+3. The email is checked against existing records.
+4. The phone and name are checked for near duplicates.
+5. If everything passes, the record is saved. Otherwise it is rejected with a message.
+
+## Live Demo
+http://YOUR_EC2_PUBLIC_IP *(add after deployment)*
+
+## Screenshots
