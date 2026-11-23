@@ -26,6 +26,6 @@ Python, Flask, SQLite, RapidFuzz, email-validator, Gunicorn, HTML/CSS/JavaScript
 5. If everything passes, the record is saved. Otherwise it is rejected with a message.
 
 ## Live Demo
-http://YOUR_EC2_PUBLIC_IP *(add after deployment)*
+http://http://54.66.2.72/ *(add after deployment)*
 
 ## Screenshots
