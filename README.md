@@ -29,3 +29,5 @@ Python, Flask, SQLite, RapidFuzz, email-validator, Gunicorn, HTML/CSS/JavaScript
 http://http://54.66.2.72/ *(add after deployment)*
 
 ## Screenshots
+![Successful registration](Successful.png)
+![Successful registration](unsuccessful.png)
